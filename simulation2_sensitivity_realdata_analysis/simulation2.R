@@ -1,9 +1,3 @@
-#for server
-args=commandArgs(T); 
-jobB=args[1];
-jobE=args[2];
-DirPre=args[3];
-
 library(coda)
 library(MASS)
 library(truncnorm)
@@ -14,7 +8,8 @@ source("reset_yobsv.R")
 source("Gibbs_missing_not0beta_NotEqualLambda.R")
 source("check_convergence_missing_not0beta_NotEqualLambda.R")
 source("accept_rate_missing.R")
-
+source("IC.R")
+source("maxlikeli.R")
 
 delta_t<-2/3;n.data<-36
 n.par<-4+2*(36-12) #the number of parameters
@@ -24,7 +19,7 @@ filenames1 <- paste("output", 1:1000, sep="")
 para<-read.csv("para_unif.csv",header=TRUE)
 
 filenames13 <- paste("DATA", 1:100000, sep="")
-for(i in jobB:jobE)
+for(i in 1:100)
 {
   theta<-as.numeric(para[i,2:5])
   m_0<-para[i,6]

@@ -1,9 +1,3 @@
-#for server
-args=commandArgs(T); 
-jobB=args[1];
-jobE=args[2];
-DirPre=args[3];
-
 library(coda)#for MCMC
 library(MASS)
 library(truncnorm)
@@ -22,7 +16,6 @@ filenames2 <- paste("DATA", 1:100000, sep="")
 
 para<-read.csv("para_unif.csv",header=TRUE)
 
-#for(i in jobB:jobE)
 for(i in 1:100)  
 {
   theta <- as.numeric(para[i,2:5])

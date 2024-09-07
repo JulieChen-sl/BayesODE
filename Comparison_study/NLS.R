@@ -1,5 +1,5 @@
 #Write a program to estimate parameters using 
-#Differential Evolution Optimization algorithm and RK4
+#nonlinear least square algorithm and RK4
 
 #Write a function that, given the values of 
 #the arguments, computes the value of the objective function

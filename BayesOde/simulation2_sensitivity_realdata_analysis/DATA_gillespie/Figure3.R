@@ -16,7 +16,7 @@ for(i in 1:4)
   t=24
   delta_t<-t/n.data
   time<-seq(from=0,to=t,length.out=n.data+1)
-  N0<-1000
+  N0<-round(runif(1,100,2000))
 
   n<-n.data+1
   n.track=5
@@ -91,20 +91,22 @@ for(i in 1:4)
     Nt_mean2[k]<-N0*exp((lambda1-lambda2)*miu_est+lambda2*delta_t*(k-1))
   }
  
-  lab=paste("m0=",round (m1,3),"¦Á=",round (alpha,3),"¦Â=", round (beta,3),"¦Ë1=", round (lambda1,3),"¦Ë2=", round (lambda2,3))
-  mmm<-max(Nt_var,Nt_breed,Nt_mean2)
+  lab=paste("m0=",round (m1,3),"Î±=",round (alpha,3),"Î²=", round (beta,3),"Î»1=",
+            round (lambda1,3),"Î»2=", round (lambda2,3),"N0=",N0)
+  mmm<-1/max(Nt_var,Nt_breed,Nt_mean2)
   par(mar = c(4, 4, 1, 1))
-  plot(time,n.total[1,],col=3,type="l",mgp=c(2.5,1,0),xaxt='n',ylim=c(min(Nt_var),mmm),xlab="Day",ylab="Nt",
-       lty=5,lwd=1,main = lab,cex.main=0.8)
+  plot(time,1/n.total[1,],col=3,type="l",mgp=c(2.5,1,0),xaxt='n',ylim=
+         c(mmm,max(1/Nt_var)),xlab="Day",ylab="1/Nt",lty=5,lwd=1,
+       main = lab,cex.main=0.8)
   axis(1,at=seq(0,24,4),cex.axis=0.8)
   for(k in 2:n.track)
   {
-    lines(time,n.total[k,],col=3,lwd=1,lty=5,type="l")
+    lines(time,1/n.total[k,],col=3,lwd=1,lty=5,type="l")
   }
-  lines(time,Nt_mean2,col=2,lty=1,lwd=1,pch=18,type="o",cex=0.6)
-  lines(time,Nt_var,col=4,lty=1,lwd=1,pch=15,type="o",cex=0.4)
-  lines(time,Nt_breed,col=1,lty=1,lwd=1,pch=20,type="o",cex=0.6)
-  legend("topleft", inset=.05,legend=c("trajectory","Nt_mean","Nt_var","Nt_average"),col=c(3,2,4,1),lty=c(5,1,1,1)
+  lines(time,1/Nt_mean2,col=2,lty=1,lwd=1,pch=18,type="o",cex=0.6)
+  lines(time,1/Nt_var,col=4,lty=1,lwd=1,pch=15,type="o",cex=0.4)
+  lines(time,1/Nt_breed,col=1,lty=1,lwd=1,pch=20,type="o",cex=0.6)
+  legend("topright", inset=.05,legend=c("Trajectory","Nt_mean","Nt_var","Nt_average"),col=c(3,2,4,1),lty=c(5,1,1,1)
          ,pch=c(NA,18,15,20),lwd=c(1,1,1,1))
   if(i%%4==0)
   {
